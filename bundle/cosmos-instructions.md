@@ -105,6 +105,20 @@ git rev-parse --show-toplevel
 
 Store the output as `<repo_root>`. All absolute paths below use this.
 
+### Step 2.1 — Start live dashboard
+
+Start the QuantumAgent live dashboard in the background before launching cosmos agents, so insights are visible in real time:
+
+```bash
+node <repo_root>/tools/dashboard.js &
+```
+
+The server listens on port 3141 and auto-opens http://localhost:3141 in the default browser. If already running (`EADDRINUSE`), it opens the browser and exits silently — no duplicate process.
+
+Skip silently if `tools/dashboard.js` does not exist.
+
+---
+
 ### Step 2.5 — Load macro-scale context (optional)
 
 **Project Spin** — read if exists:
