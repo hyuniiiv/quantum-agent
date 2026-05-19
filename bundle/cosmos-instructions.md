@@ -107,22 +107,20 @@ Store the output as `<repo_root>`. All absolute paths below use this.
 
 ### Step 2.1 — Start live dashboard
 
-Start the QuantumAgent live dashboard in the background before launching cosmos agents, so insights are visible in real time.
+Start the QuantumAgent live dashboard in the background before launching cosmos agents, so insights are visible in real time:
 
-On **Windows** (Git Bash / MSYS2):
 ```bash
-cmd //c start //b node "<repo_root>/tools/dashboard.js"
+if [ -f "<repo_root>/tools/dashboard.js" ]; then
+  if [[ "$OS" == "Windows_NT" ]]; then
+    cmd //c start //b node "<repo_root>/tools/dashboard.js"
+  else
+    nohup node <repo_root>/tools/dashboard.js </dev/null >/dev/null 2>&1 &
+    disown $!
+  fi
+fi
 ```
 
-On **macOS / Linux**:
-```bash
-nohup node <repo_root>/tools/dashboard.js </dev/null >/dev/null 2>&1 &
-disown $!
-```
-
-Detect the platform with `[[ "$OS" == "Windows_NT" ]]` and pick the right variant. The server listens on port 3141 and auto-opens http://localhost:3141 in the default browser. If already running (`EADDRINUSE`), it opens the browser and exits silently — no duplicate process.
-
-Skip silently if `tools/dashboard.js` does not exist.
+The server listens on port 3141 and auto-opens http://localhost:3141 in the default browser. If already running (`EADDRINUSE`), it opens the browser and exits silently — no duplicate process.
 
 ---
 
